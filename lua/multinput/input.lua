@@ -1,5 +1,5 @@
-local utils = require("lib.utils")
-local defaults = require("lib.config").defaults
+local utils = require("multinput.utils")
+local defaults = require("multinput.config").defaults
 
 ---@class multinput.Input
 ---@field config multinput.Config

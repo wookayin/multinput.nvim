@@ -1,4 +1,4 @@
-local Input = require("lib.input")
+local Input = require("multinput.input")
 
 local M = {}
 
