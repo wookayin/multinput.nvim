@@ -34,15 +34,19 @@ function M.split_wrapped_lines(text, width)
 
   ---@type string[]
   local lines = {}
-  local textlen = vim.fn.strchars(text, true)
 
-  local i = 0
-  while i < textlen do
-    local len = i + width <= textlen and width or textlen - i
-    local new_line = vim.fn.strcharpart(text, i, len)
-
-    table.insert(lines, new_line)
-    i = i + len
+  for segment in (text .. "\n"):gmatch("([^\n]*)\n") do
+    local seglen = vim.fn.strchars(segment, true)
+    if seglen == 0 then
+      table.insert(lines, "")
+    else
+      local i = 0
+      while i < seglen do
+        local len = i + width <= seglen and width or seglen - i
+        table.insert(lines, vim.fn.strcharpart(segment, i, len))
+        i = i + len
+      end
+    end
   end
 
   return lines

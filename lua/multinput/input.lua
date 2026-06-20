@@ -114,7 +114,7 @@ end
 
 function Input:resize()
   local text = vim.api.nvim_buf_get_lines(self.bufnr, 0, -1, false)
-  local line = table.concat(text, "")
+  local line = table.concat(text, "\n")
 
   if line == "" then
     self:set_size(0, 1)
@@ -149,7 +149,8 @@ function Input:mappings()
   end
 
   local function confirm()
-    self:close(vim.api.nvim_buf_get_lines(self.bufnr, 0, 1, false)[1])
+    local lines = vim.api.nvim_buf_get_lines(self.bufnr, 0, -1, false) ---@type string[]
+    self:close(table.concat(lines, "\n"))
   end
 
   map({ "n", "i", "v" }, "<cr>", confirm)
